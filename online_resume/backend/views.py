@@ -1,0 +1,52 @@
+from xml.etree.ElementTree import tostring
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+import io
+import os
+import fitz
+from PIL import Image
+# Create your views here.
+from django.contrib.auth.decorators import login_required
+
+from .models import Resume
+from .import image_pdf
+from django.contrib.auth.models import User
+
+@login_required
+def home(request):
+    if request.method=='POST':
+        print("This is the page")
+    else:
+        return render(request,'backend/main.html')
+
+@login_required
+def save_file(request):
+    if request.method=='POST':
+        name="First Resume"
+        print('----------------------')
+        print(request.FILES)
+        print('----------------------')
+        pdf=request.FILES.get('pdf')
+        # print(pdf.name)
+        # print(os.getcwd())
+        image=image_pdf.convert_pfd_image(pdf)
+        
+        print(image)
+        user=User.objects.get(pk=request.user.id) 
+        resume=Resume.objects.create(name=name,file=pdf,user=user,image=image)
+        # resume.save()
+        # print(resume)
+
+    return HttpResponse("This is the page")
+
+
+
+
+@login_required
+def Logout(request):
+    print("yaha yal tp aa raha hai")
+    logout(request)
+    print("THis is redirecting to the page")
+    return redirect('home')
