@@ -20,7 +20,9 @@ def home(request):
     if request.method=='POST':
         print("This is the page")
     else:
-        return render(request,'backend/main.html')
+        list_resume=Resume.objects.filter(user=request.user.id)
+        print(list_resume)
+        return render(request,'backend/main.html',{"resume":list_resume})
 
 @login_required
 def save_file(request):
