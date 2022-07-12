@@ -20,10 +20,13 @@
         <li class="fw">Hello {{user.username}}</li>
         <li style="float: right; margin-right: 2rem;" class="fw"><a href="{% url 'logout' %}">Logout</a></li>
     </ul>
-    <div class="contianer pl">
+    <div class="contianer upper">
+        <h2 for="pdf">Enter the file here</h2>
         <form action="{% url 'save' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <label for="pdf" class="h3">Enter the file here</label>
+            
+            <label for="name">Enter the name of the file</label>
+            <input type="text" name="name" id="name" >
             <br>
            <input class="mb-3" type="file" value="pdf" name="pdf" id="pdf">
            <br>

@@ -6,9 +6,9 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Resume(models.Model):
-    name=models.CharField(max_length=255)
+    name=models.CharField(max_length=255,unique=True)
     image=models.ImageField(upload_to="image",blank=True,null=True)
-    file=models.FileField(upload_to='pdf')
+    file=models.FileField(upload_to='pdf',blank=False)
     user=models.ForeignKey(User,on_delete=models.CASCADE,blank=False,null=False)
 
     def __str__(self):

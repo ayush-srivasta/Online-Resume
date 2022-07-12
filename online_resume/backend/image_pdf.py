@@ -8,7 +8,7 @@ def convert_pfd_image(file):
     # print(file)
     print("******************************")
     # page=pdf_file[0]
-    image_list = pdf_file.getPageImageList(0)
+    # image_list = pdf_file.getPageImageList(0)
 
-    print(image_list)
+    # print(image_list)
    

@@ -1,3 +1,4 @@
+import re
 from xml.etree.ElementTree import tostring
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -24,19 +25,17 @@ def home(request):
 @login_required
 def save_file(request):
     if request.method=='POST':
-        name="First Resume"
-        print('----------------------')
-        print(request.FILES)
-        print('----------------------')
+        name=request.POST.get('name')
         pdf=request.FILES.get('pdf')
+        print(request.POST)
         # print(pdf.name)
         # print(os.getcwd())
-        image=image_pdf.convert_pfd_image(pdf)
+        # image=image_pdf.convert_pfd_image(pdf)
         
-        print(image)
+        # print(image)
         user=User.objects.get(pk=request.user.id) 
-        resume=Resume.objects.create(name=name,file=pdf,user=user,image=image)
-        # resume.save()
+        resume=Resume.objects.create(name=name,file=pdf,user=user)
+        resume.save()
         # print(resume)
 
     return HttpResponse("This is the page")
