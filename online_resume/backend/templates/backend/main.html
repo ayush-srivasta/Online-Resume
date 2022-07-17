@@ -41,7 +41,8 @@
             <div class="card-body">
                 <h5  class="card-title">{{item.name}}</h5>
                 
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <a href="{% url 'open' item.name %}" target="blank" class="btn btn-primary mb-2">Open the resume</a>
+                <a href="{% url 'download' item.name %}" class="btn btn-primary ">Download</a>
             </div>
         </div>
     </div>

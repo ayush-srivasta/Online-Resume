@@ -1,6 +1,7 @@
 from distutils.command.upload import upload
 from django.db import models
-
+from django.db.models.signals import pre_delete
+from django.dispatch.dispatcher import receiver
 from user.models import ResumeUser
 from django.contrib.auth.models import User
 
@@ -13,3 +14,10 @@ class Resume(models.Model):
 
     def __str__(self):
         return self.user.username+" "+self.name
+    
+    
+@receiver(pre_delete, sender=Resume)
+def mymodel_delete(sender, instance, **kwargs):
+    # Pass false so FileField doesn't save the model.
+    instance.file.delete(False)
+    
