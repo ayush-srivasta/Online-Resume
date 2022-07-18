@@ -27,21 +27,17 @@ def save_file(request):
         name=request.POST.get('name')
         pdf=request.FILES.get('pdf')
         # print(request.POST)
-       
         user=User.objects.get(pk=request.user.id) 
         pdf.name=request.user.username+' '+name+'.pdf'
         resume=Resume.objects.create(name=name,file=pdf,user=user)
         resume.save()
         obj=Resume.objects.filter(user=user)
-        
-       
-
     return redirect('main')
 
-def download_pdf(request,name):
+def download_pdf(request,username,name):
     print("YAha tak aa raha hai")
     print(name)
-    fname=request.user.username+' '+name+'.pdf'
+    fname=username+' '+name+'.pdf'
     fname=fname.replace(" ", "_")
     filepath = os.path.join('media/pdf', fname)
     print(fname)
@@ -49,8 +45,8 @@ def download_pdf(request,name):
     return FileResponse(open(filepath, 'rb'), content_type='application/pdf')
 
 
-def open_pdf(request,name):
-    obj=Resume.objects.filter(user=request.user)
+def open_pdf(request,username,name):
+    obj=Resume.objects.filter(user=User.objects.get(username=username))
     resume=obj.get(name=name)
     pdf=resume.file
     print(pdf)
